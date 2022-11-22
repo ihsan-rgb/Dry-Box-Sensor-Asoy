@@ -33,6 +33,8 @@ void displayOled() {
   // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
 
+
+
   display.clearDisplay();
   display.setTextColor(WHITE);
   display.setTextSize(0.5);
@@ -66,6 +68,11 @@ void setup() {
   display.clearDisplay();
   dht.begin();
 
+  Serial.print("Humidity");
+  Serial.print("(%) ");
+  Serial.print("Temperature ");
+  Serial.print("(C) ");
+
 }
 
 void loop() {
@@ -80,7 +87,7 @@ void loop() {
   float t = dht.readTemperature();
   // Read temperature as Fahrenheit (isFahrenheit = true)
   float f = dht.readTemperature(true);
-
+  
   bool t_status = (t >= 70);
   bool h_status = (h >= 55);
 
@@ -100,15 +107,9 @@ void loop() {
   digitalWrite(LED_4, !t_status);
 
 
-  Serial.print(F("Humidity: "));
   Serial.print(h);
-  Serial.print(F("%  Temperature: "));
+  Serial.print(" ");
   Serial.print(t);
-  Serial.print(F("°C "));
-  Serial.print(f);
-  Serial.print(F("°F  Heat index: "));
-  Serial.print(hic);
-  Serial.print(F("°C "));
-  Serial.print(hif);
-  Serial.println(F("°F"));
+  Serial.print(" ");
+
 }
