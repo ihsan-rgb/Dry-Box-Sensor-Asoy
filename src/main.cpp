@@ -17,8 +17,8 @@ DHT dht(DHTPIN, DHTTYPE);
 
 #define LED_1 18 
 #define LED_2 5
-#define LED_3 7
-#define LED_4 6
+#define LED_3 17
+#define LED_4 16
 
 void displayOled() {
 
@@ -82,7 +82,7 @@ void loop() {
   float f = dht.readTemperature(true);
 
   bool t_status = (t >= 70);
-  bool h_status = (h >= 27);
+  bool h_status = (h >= 55);
 
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t) || isnan(f)) {
