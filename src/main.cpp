@@ -11,9 +11,14 @@
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-#define DHTPIN 14
+#define DHTPIN 3 // Digital pin connected to the DHT sensor
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 DHT dht(DHTPIN, DHTTYPE);
+
+#define LED_1 18 
+#define LED_2 5
+#define LED_3 7
+#define LED_4 6
 
 void displayOled() {
 
@@ -49,10 +54,10 @@ void displayOled() {
 void setup() {
 
   Serial.begin(115200);
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT);
-  pinMode(33, OUTPUT);
-  pinMode(27, OUTPUT);
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+  pinMode(LED_3, OUTPUT);
+  pinMode(LED_4, OUTPUT);
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
@@ -77,7 +82,7 @@ void loop() {
   float f = dht.readTemperature(true);
 
   bool t_status = (t >= 70);
-  bool h_status = (t >= 27);
+  bool h_status = (h >= 27);
 
   // Check if any reads failed and exit early (to try again).
   if (isnan(h) || isnan(t) || isnan(f)) {
@@ -89,10 +94,10 @@ void loop() {
   float hic = dht.computeHeatIndex(t, h, false);
   displayOled();
 
-  digitalWrite(12, h_status);
-  digitalWrite(13, !h_status);
-  digitalWrite(27, t_status);
-  digitalWrite(33, !t_status);
+  digitalWrite(LED_1, h_status);
+  digitalWrite(LED_2, !h_status);
+  digitalWrite(LED_3, t_status);
+  digitalWrite(LED_4, !t_status);
 
 
   Serial.print(F("Humidity: "));
